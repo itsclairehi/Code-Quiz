@@ -1,49 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code Quiz!</title>
-<link rel="stylesheet" href="./assets/style.css">
+    <link rel="stylesheet" href="./assets/style.css">
 </head>
+
 <body>
+    <main id="main">
     <header>
-<h1>Coding Quiz Challenge</h1>
-<p>Try to answer correctly to see where you stand!</p>
-<button class="go-buttons">Start Quiz</button>
-</header>
+        <h1>Coding Quiz Challenge</h1>
+        <p>Try to answer correctly to see where you stand!</p>
+        <button class="go-buttons" id="startbtn">Start Quiz</button>
+    </header>
 
-<main>
-<section class="question">
-    <p></p>
-</section>
+    
+        <section class="active-quiz">
+            <section class="question">
+                <p></p>
+            </section>
 
-<section class = "answers">
-    <ol>
-    <button class="answer">1.</button>
-    <button class="answer">2.</button>
-    <button class="answer">3.</button>
-    <button class="answer">4.</button>
-    </ol>
-</section>
+            <section class="answers">
+                <ol>
+                    <button class="answer">1.</button>
+                    <button class="answer">2.</button>
+                    <button class="answer">3.</button>
+                    <button class="answer">4.</button>
+                </ol>
+            </section>
+            <p class="timer" id="timer"></p>
+        </section>
 
-<section class= "all-done">
-    <p></p>
 
-    <!-- submit initials form -->
-    <form>
+        <section class="all-done">
+            <p></p>
 
-    </form>
-</section>
+            <!-- submit initials form -->
+            <form>
 
-<section class="high-score">
+            </form>
+        </section>
 
-    <button class="go-buttons">Clear score</button>
-    <button class="go-buttons">Try Again</button>
-</section>
+        <section class="high-score">
 
-</main>
+            <button class="go-buttons" id="clear-scores">Clear score</button>
+            <button class="go-buttons" id="try-again">Try Again</button>
+        </section>
+
+    </main>
 
     <script src="./assets/quiz.js"></script>
 </body>
+
 </html>
