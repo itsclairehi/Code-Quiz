@@ -1,0 +1,15 @@
+
+body {
+    text-align: center;
+    padding: 20%;
+}
+
+.answer {
+    background-color: aquamarine;
+    border-radius: 10px;
+}
+
+.go-buttons {
+    background-color: burlywood;
+    border-radius: 5px;
+}
