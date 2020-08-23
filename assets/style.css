@@ -13,3 +13,7 @@ body {
     background-color: burlywood;
     border-radius: 5px;
 }
+
+.hide {
+    display: none;
+}

@@ -6,7 +6,7 @@
 //  *add event listener "click" to start button that goes to countdown function
 //  *countdown function enclosed in larger function that includes creating first question?
 
-//create 1 event listener click for all 4 answer options (event delegation?)
+//create 1 event listener click for all 4 answer options (event delegation)
 //any clicked will trigger the next question and answer set of the array
 //  *push question and answer info into empty array?
 //if click event happens on button whose textContent===correctAnswer, will trigger "right" text or alert
@@ -26,14 +26,18 @@
 
 
 
-//make references to html elements and store in variables 
-var mainEl = document.querySelector("#main")
+//references to html elements stored in variables 
+// var mainEl = document.querySelector("#main")
 var startBtn = document.querySelector("#startbtn")
 var timerEl = document.querySelector("#timer")
 var questionEl = document.querySelector("#question")
 var resultEl = document.querySelector("#result")
+var startScreen = document.querySelector("#startscreen")
+var activeQuizScreen = document.querySelector("#activequiz")
+var scoreScreen = document.querySelector("#scorescreen")
 
 //references to answer buttons
+var answerBtns = document.querySelector("#answerbtns")
 var answerOption1El = document.querySelector("#option1")
 var answerOption2El = document.querySelector("#option2")
 var answerOption3El = document.querySelector("#option3")
@@ -41,6 +45,13 @@ var answerOption4El = document.querySelector("#option4")
 //other buttons
 var tryAgainBtn = document.querySelector("#try-again")
 var clearScoresBtn = document.querySelector("#clear-scores")
+var initialsBtn = document.querySelector("#save-initials")
+
+//initialized global varibales
+var indexQuestion = 0;
+var timeLeft = 60;
+var timeInterval; 
+var score = 0;
 
 //make questions array 
 var questions = [
@@ -53,71 +64,118 @@ var questions = [
         correctAnswer: "yes"
     },
     {
-        ask: "what's up this is ask 2",
-        option1: "no",
-        option2: "yes",
-        option3: "maybe",
-        option4: "whatever",
-        correctAnswer: "no"
+        ask: "2. what is red",
+        option1: "blue",
+        option2: "red",
+        option3: "green",
+        option4: "yellow",
+        correctAnswer: "red"
     },
     {
-        ask: "what's up this is ask 3",
-        option1: "no",
-        option2: "yes",
-        option3: "maybe",
-        option4: "whatever",
-        correctAnswer: "yes"
+        ask: "3. what is dog",
+        option1: "cat",
+        option2: "bug",
+        option3: "hamster",
+        option4: "dog",
+        correctAnswer: "dog"
     },
     {
-        ask: "what's up this is ask 4",
-        option1: "no",
-        option2: "yes",
-        option3: "maybe",
+        ask: "4. what year?",
+        option1: "2020",
+        option2: "2040",
+        option3: "1990",
         option4: "whatever",
-        correctAnswer: "no"
+        correctAnswer: "2020"
     },
 
 ]
+function startQuiz() {
 
-//just get one question to show up first
+startScreen.classList.add("hide")
+activeQuizScreen.classList.remove("hide")
 
-for (i=0; i < questions.length; i++) {
-questionEl.textContent = questions[i].ask;
+        timeInterval = setInterval(countdown, 1000);
+        countdown();
+        renderQuestions();
 
-//populate answer buttons text content with according answer
-answerOption1El.textContent = questions[i].option1;
-answerOption2El.textContent = questions[i].option2;
-answerOption3El.textContent = questions[i].option3;
-answerOption4El.textContent = questions[i].option4;
+      
+};
 
-// //compare answers
-//  if (right answer button clicked on===questions.correctAnswer) {
-// resultEl.textContent=="Correct!"
-// } else {
-//     resultEl.textContent="wrong!"
-//     timerEl.textContent==timerEl-5
-// }
+function renderQuestions(){
+    if(indexQuestion===4){
+        
+        endGame();
+        return;
+        //handle game over stuff
+        
+    }
+ 
+    questionEl.textContent = questions[indexQuestion].ask;
+    //populate answer buttons text content with according answer
+    answerOption1El.textContent = questions[indexQuestion].option1;
+    answerOption2El.textContent = questions[indexQuestion].option2;
+    answerOption3El.textContent = questions[indexQuestion].option3;
+    answerOption4El.textContent = questions[indexQuestion].option4;
 }
 
+function initialsHandler() {
+    event.preventDefault();
+    console.log("initials button clicked!")
+}
 
+function endGame(){
+
+    activeQuizScreen.classList.add("hide")
+    scoreScreen.classList.remove("hide")
+
+    timerEl.textContent = '';
+    console.log("Your score is " + timeLeft)
+    timerEl.textContent = "Your score is " + timeLeft + "!"
+    clearInterval(timeInterval);
+    console.log('here', timeLeft)
+    //display form, display the score
+    //user will fill out form 
+    // onclick submit
+    //  -localStorage.setItem(/*usersname*/ timeLeft)
+    //  -display list of high scores (home buttom )
+
+
+    //populate high score form, appear tryagain and clear score buttons etc.
+    console.log("time's up!")
+
+
+}
 
 function countdown() {
-    var timeLeft = 60;
-    var timeInterval = setInterval(function() {
-        if (timeLeft > 1) {
-            timerEl.textContent=timeLeft;
-            timeLeft--;
-        } else {
-            timerEl.textContent = '';
-            clearInterval(timeInterval);
-            // displayMessage();
-            //populate high score form, appear tryagain and clear score buttons etc.
-            console.log("time's up!")
-        }
-    },
-        1000)
+    if (timeLeft > 1) {
+        timerEl.textContent = timeLeft;
+        timeLeft--;
+    } else {
+     endGame()
+    }
 }
 
+
+
 //click events
-startBtn.addEventListener("click", countdown)
+startBtn.addEventListener("click", startQuiz)
+
+initialsBtn.addEventListener("click", initialsHandler)
+
+answerBtns.addEventListener("click", (event) => {
+
+    let target = event.target.textContent;  
+    
+    if (target==questions[indexQuestion].correctAnswer) {
+        console.log("correct!");
+        indexQuestion++;
+        renderQuestions();
+    }else {
+        console.log("Wrong!")
+        timeLeft = timeLeft -  5;
+        indexQuestion++;
+        renderQuestions();
+    }
+
+})
 

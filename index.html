@@ -10,19 +10,19 @@
 
 <body>
     <main id="main">
-    <header>
-        <h1>Coding Quiz Challenge</h1>
-        <p>Try to answer correctly to see where you stand!</p>
-        <button class="go-buttons" id="startbtn">Start Quiz</button>
-    </header>
+        <header id="startscreen">
+            <h1>Coding Quiz Challenge</h1>
+            <p>Try to answer correctly to see where you stand!</p>
+            <button class="go-buttons" id="startbtn">Start Quiz</button>
+        </header>
 
-    
-        <section class="active-quiz">
+
+        <section class="hide" id="activequiz">
             <section class="questions">
                 <p id="question"></p>
             </section>
 
-            <section class="answers">
+            <section class="answers" id="answerbtns">
                 <ol>
                     <button class="answer" id="option1">1.</button>
                     <button class="answer" id="option2">2.</button>
@@ -30,26 +30,30 @@
                     <button class="answer" id="option4">4.</button>
                 </ol>
             </section>
-            <p id= "result"></p>
-            <p class="timer" id="timer"></p>
+            <p id="result"></p>
+
         </section>
 
+        <p class="timer" id="timer"></p>
 
-        <section class="all-done">
-            <p></p>
+        <section class="hide" id="scorescreen">
+            <div id="initials">
+                <p></p>
 
-            <!-- submit initials form -->
-            <form>
+                <!-- submit initials form -->
+                <form>
+                    <input type="text" name="initials" class="form-text" placeholder="initials here" />
+                    <button class="btn" id="save-initials" type="submit">submit</button>
+                </form>
+            </div>
 
-            </form>
+            <div id = "endbuttons">
+
+
+                <button class="go-buttons" id="clear-scores">Clear score</button>
+                <button class="go-buttons" id="try-again">Try Again</button>
+            </div>
         </section>
-
-        <section class="high-score">
-
-            <button class="go-buttons" id="clear-scores">Clear score</button>
-            <button class="go-buttons" id="try-again">Try Again</button>
-        </section>
-
     </main>
 
     <script src="./assets/quiz.js"></script>
