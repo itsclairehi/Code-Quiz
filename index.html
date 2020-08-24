@@ -37,22 +37,24 @@
         <p class="timer" id="timer"></p>
 
         <section class="hide" id="scorescreen">
-            <div id="initials">
-                <p></p>
 
-                <!-- submit initials form -->
+            <div class ="highscoresdiv hide">
+                <h2 class = >High Scores</h2>
+                <p id="highscoresP"></p>
+            </div>
+
+            <div id="initialsform">
                 <form>
-                    <input type="text" name="initials" class="form-text" placeholder="initials here" />
+                    <input type="text" name="initials" id="initials" placeholder="initials here" />
                     <button class="btn" id="save-initials" type="submit">submit</button>
                 </form>
             </div>
 
-            <div id = "endbuttons">
-
-
+            <div id="endbuttons">
                 <button class="go-buttons" id="clear-scores">Clear score</button>
                 <button class="go-buttons" id="try-again">Try Again</button>
             </div>
+
         </section>
     </main>
 

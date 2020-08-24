@@ -24,10 +24,9 @@
 //add event listener click to "clear scores" button that goes to function that clears form
 //     *create clearScores function
 
-
+var highScores = []
 
 //references to html elements stored in variables 
-// var mainEl = document.querySelector("#main")
 var startBtn = document.querySelector("#startbtn")
 var timerEl = document.querySelector("#timer")
 var questionEl = document.querySelector("#question")
@@ -35,6 +34,8 @@ var resultEl = document.querySelector("#result")
 var startScreen = document.querySelector("#startscreen")
 var activeQuizScreen = document.querySelector("#activequiz")
 var scoreScreen = document.querySelector("#scorescreen")
+var highScoresDiv = document.querySelector(".highscoresdiv")
+
 
 //references to answer buttons
 var answerBtns = document.querySelector("#answerbtns")
@@ -52,6 +53,11 @@ var indexQuestion = 0;
 var timeLeft = 60;
 var timeInterval; 
 var score = 0;
+
+//references for initials input and highscores
+var initials = document.querySelector("#initials")
+var initialsForm = document.querySelector("#initialsform")
+var highScoresP = document.querySelector("#highscoresP")
 
 //make questions array 
 var questions = [
@@ -118,11 +124,6 @@ function renderQuestions(){
     answerOption4El.textContent = questions[indexQuestion].option4;
 }
 
-function initialsHandler() {
-    event.preventDefault();
-    console.log("initials button clicked!")
-}
-
 function endGame(){
 
     activeQuizScreen.classList.add("hide")
@@ -139,9 +140,9 @@ function endGame(){
     //  -localStorage.setItem(/*usersname*/ timeLeft)
     //  -display list of high scores (home buttom )
 
-
+ 
     //populate high score form, appear tryagain and clear score buttons etc.
-    console.log("time's up!")
+    // highScores.push()
 
 
 }
@@ -155,13 +156,45 @@ function countdown() {
     }
 }
 
+function renderScore() {
+    var initials = localStorage.getItem('initials')
 
+    console.log(initials)
+
+highScoresP.textContent= initials + " , " + timeLeft;
+
+    if (initials === null) {
+        return;
+}
+}
 
 //click events
 startBtn.addEventListener("click", startQuiz)
 
-initialsBtn.addEventListener("click", initialsHandler)
+initialsBtn.addEventListener("click", function(event) {
+    event.preventDefault();
 
+    var initials = document.querySelector("#initials").value
+
+    localStorage.setItem('initials', initials)
+
+    // var playerData = initials + " , " + timeLeft;
+
+    // highScores.push(playerData)
+
+    // console.log("playerData: " + playerData, " ", "highScores: " + highScores)
+
+    highScoresDiv.classList.remove("hide")
+    initialsForm.classList.add("hide")
+
+    renderScore();
+    
+})
+
+function reload() {
+location.reload();
+
+}
 answerBtns.addEventListener("click", (event) => {
 
     let target = event.target.textContent;  
@@ -179,3 +212,9 @@ answerBtns.addEventListener("click", (event) => {
 
 })
 
+clearScoresBtn.addEventListener("click", function(event) {
+    highScoresP.textContent = "";
+})
+
+//add function that resets quiz
+tryAgainBtn.addEventListener("click", reload)
