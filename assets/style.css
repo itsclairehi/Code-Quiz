@@ -2,6 +2,7 @@
 body {
     text-align: center;
     padding: 20%;
+    background-color: papayawhip;
 }
 
 .answer {
@@ -16,4 +17,16 @@ body {
 
 .hide {
     display: none;
+}
+
+.timer {
+    color:palevioletred
+}
+
+div {
+    padding: 8%;
+}
+
+p {
+    padding: 3%;
 }
