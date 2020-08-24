@@ -52,12 +52,14 @@ var initialsBtn = document.querySelector("#save-initials")
 var indexQuestion = 0;
 var timeLeft = 60;
 var timeInterval; 
-var score = 0;
+
 
 //references for initials input and highscores
 var initials = document.querySelector("#initials")
 var initialsForm = document.querySelector("#initialsform")
+
 var highScoresP = document.querySelector("#highscoresP")
+var highscoresArr= []
 
 //make questions array 
 var questions = [
@@ -100,6 +102,14 @@ function startQuiz() {
 startScreen.classList.add("hide")
 activeQuizScreen.classList.remove("hide")
 
+localStorage.getItem('initials');
+if (initials == null) {
+    initials== ''
+} else {
+    
+}
+
+
         timeInterval = setInterval(countdown, 1000);
         countdown();
         renderQuestions();
@@ -131,7 +141,11 @@ function endGame(){
 
     timerEl.textContent = '';
     console.log("Your score is " + timeLeft)
+    if(timeLeft==1) {
+        timerEl.textContent="Your score is 0!"
+    } else {
     timerEl.textContent = "Your score is " + timeLeft + "!"
+    }
     clearInterval(timeInterval);
     console.log('here', timeLeft)
     //display form, display the score
@@ -156,40 +170,85 @@ function countdown() {
     }
 }
 
-function renderScore() {
-    var initials = localStorage.getItem('initials')
+// function renderScore() {
+//     var initials = localStorage.getItem('initials')
 
-    console.log(initials)
+//     console.log(initials)
 
-highScoresP.textContent= initials + " , " + timeLeft;
+// highScoresP.textContent = initials + " , " + timeLeft
 
-    if (initials === null) {
-        return;
-}
+// var playerData = JSON.stringify(initials + ": " + timeLeft)
+
+// highscoresArr.push(playerData)
+
+// console.log("high scores array " + highscoresArr)
+
+// localStorage.setItem('highscores', highscoresArr)
+
+// highScoresP.textContent = localStorage.getItem('highscores')
+    
+
+// }
+
+function scoreReal() {
+
+
+    event.preventDefault();
+
+    var initials = document.querySelector("#initials").value
+
+    // localStorage.setItem('initials', initials)
+
+    console.log("this is initials: " + initials)
+
+    debugger;
+    var playerData = initials + ": " + timeLeft
+    var oldScores = localStorage.getItem('highscores')
+    
+    highscoresArr.push(playerData, oldScores)
+    console.log("highscoresArr: " + highscoresArr)
+    localStorage.setItem('highscores', highscoresArr)
+    
+    // if (highscoresArr.length < 0) {
+    //     highscoresArr.push(playerData)
+    //     console.log("highscoresArr: " + highscoresArr)
+    //     localStorage.setItem('highscores', highscoresArr)
+    // } else {
+        
+    //     localStorage.highscores = JSON.stringify([highscoresArr])
+    //     localStorage.getItem('highscores');
+    //     highscoresArr.push(playerData)
+    //     console.log("high scores " + highscoresArr )
+    //     highscoresArr.push(document.getElementById('highscores'))
+    //     console.log("highscoresArr " + highscoresArr)
+        
+        
+        
+        // localStorage.setItem('highscores', highscoresArr)
+    
+    //}
+
+
+    // var highScores= JSON.parse({highscoresArr})
+
+    highScoresP.textContent = highscoresArr
 }
 
 //click events
 startBtn.addEventListener("click", startQuiz)
 
 initialsBtn.addEventListener("click", function(event) {
-    event.preventDefault();
-
-    var initials = document.querySelector("#initials").value
-
-    localStorage.setItem('initials', initials)
-
-    // var playerData = initials + " , " + timeLeft;
-
-    // highScores.push(playerData)
-
-    // console.log("playerData: " + playerData, " ", "highScores: " + highScores)
-
+    
     highScoresDiv.classList.remove("hide")
     initialsForm.classList.add("hide")
 
-    renderScore();
     
+scoreReal();
+    // renderScore();
 })
+
+
+
 
 function reload() {
 location.reload();
@@ -216,5 +275,79 @@ clearScoresBtn.addEventListener("click", function(event) {
     highScoresP.textContent = "";
 })
 
-//add function that resets quiz
 tryAgainBtn.addEventListener("click", reload)
+
+
+
+
+
+// function loadScores() {
+//     if(typeof(Storage)!=="undefined"){
+//         var scores = false;
+//         if(localStorage["highscoresP"]) {
+            
+//             scores = JSON.parse(localStorage["highscoresP"]);
+            
+
+//             for(var i = 0; i < 10; i++){
+//                 var s = scores[i];                        
+//                 var fragment = document.createElement('li');
+//                 fragment.innerHTML = (typeof(s) != "undefined" ? s : "" );
+//                 highScoresP.appendChild(fragment);
+//             }
+//         }
+//     } else {
+//         highScoresP.style.display = "none";
+//     }
+// }
+
+// function updateScores() {
+//     if(typeof(Storage)!=="undefined"){
+//         var current = parseInt(score.innerHTML);
+//         var scores = false;
+//         if(localStorage["highscoresP"]) {
+
+//             scores = JSON.parse(localStorage["highscoresP"]);
+            
+//             for(var i = 0; i < 10; i++){
+//                 var s = parseInt(scores[i]);
+                
+//                 var val = (!isNaN(s) ? s : 0 );
+//                 if(current > val)
+//                 {
+//                     val = current;
+//                     scores.splice(i, 0, parseInt(current));
+//                     break;
+//                 }
+//             }
+            
+//             scores.length = 10;                                
+//             localStorage["highscoresP"] = JSON.stringify(scores);
+
+//         } else {                        
+//             var scores = new Array();
+//             scores[0] = current;
+//             localStorage["highscoresP"] = JSON.stringify(scores);
+//         }
+        
+//         loadScores();
+//     } 
+// }
+
+
+
+// var highscoresArr = JSON.parse(localStorage.getItem("initials"))
+    
+    // if (initials === null) {
+    //     highscoresArr = [];
+    // }
+
+    // highscoresArr.push({ [initials]: timeLeft})
+
+    // localStorage.setItem("initials", JSON.stringify(highscoresArr))
+
+    // var playerData = initials + " , " + timeLeft;
+
+    // highScores.push(playerData)
+
+    // console.log("playerData: " + playerData, " ", "highScores: " + highScores)
